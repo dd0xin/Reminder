@@ -1,12 +1,15 @@
-const { Markup, session, Telegraf } = require('telegraf');
+const { Markup, session } = require('telegraf');
+
+const Telegraf = require('telegraf')
 
 const stage = require('./stages');
 
-const app = new Telegraf(process.env.BOT_TOKEN);
 
 const BOT_TOKEN = process.env.BOT_TOKEN;
-const URL = process.env.URL;
+const URL = process.env.URL || 'https://redmine-assistant.herokuapp.com/';
 const PORT = process.env.PORT || 2000;
+
+const app = new Telegraf(BOT_TOKEN);
 
 app.telegram.setWebhook(`${URL}bot${BOT_TOKEN}`)
 app.startWebhook(`/bot${BOT_TOKEN}`, null, PORT)
@@ -36,4 +39,4 @@ app.start(ctx => {
 
 app.use(stage.middleware());
 
-// app.launch(); // Start polling bot from you computer
+app.launch(); // Start polling bot from you computer

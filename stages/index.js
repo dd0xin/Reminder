@@ -1,7 +1,7 @@
 const { Markup, Stage } = require('telegraf');
 
-const createReminder = require('./stages/reminder');
-const remindersReview = require('./stages/reminders-review');
+const createReminder = require('./reminder');
+const remindersReview = require('./reminders-review');
 
 
 const stage = new Stage([createReminder, remindersReview]);
