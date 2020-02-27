@@ -1,5 +1,6 @@
 const { Markup } = require("telegraf");
 const WizardScene = require("telegraf/scenes/wizard");
+const Scheduler = require('../../schedule/Sheduler');
 
 const stepHandler = require('./actions');
 
@@ -30,25 +31,30 @@ const createReminder = new WizardScene(
   },
   stepHandler,
   ctx => {
-    if (!ctx.message || !isValidTime(ctx.message.text)) {
-      return ctx.reply("Please enter valid time!");
+    try {
+      if (!ctx.message || !isValidTime(ctx.message.text)) {
+        return ctx.reply("Please enter valid time!");
+      }
+      const [hour, minute] = ctx.message.text.split(":");
+      ctx.wizard.state.task = { ...ctx.wizard.state.task, hour, minute };
+      // TODO: delete reminder after executing
+      const task = new Scheduler({
+        ...ctx.wizard.state.task,
+        scheduleCallback: () => ctx.reply(ctx.wizard.state.task.title)
+      });
+      task.start();
+      ctx.session.reminders.push(task);
+      ctx.reply(
+        "Reminder have just started! Would you like to add another one?",
+        Markup.inlineKeyboard([
+          [Markup.callbackButton("Yes", "ADD_NEW_REMINDER")],
+          [Markup.callbackButton("No", "LEAVE_SCENE")]
+        ]).extra()
+      );
+      return ctx.wizard.next();
+    } catch(error) {
+      console.log(error);
     }
-    const [hour, minute] = ctx.message.text.split(":");
-    ctx.wizard.state.task = { ...ctx.wizard.state.task, hour, minute };
-    const task = new Scheduler({
-      ...ctx.wizard.state.task,
-      scheduleCallback: () => ctx.reply(ctx.wizard.state.task.title)
-    });
-		task.start();
-    ctx.session.reminders.push(task);
-    ctx.reply(
-      "Reminder have just started! Would you like to add another one?",
-      Markup.inlineKeyboard([
-        [Markup.callbackButton("Yes", "ADD_NEW_REMINDER")],
-        [Markup.callbackButton("No", "LEAVE_SCENE")]
-      ]).extra()
-    );
-    return ctx.wizard.next();
   },
   stepHandler
 );
