@@ -37,10 +37,14 @@ const createReminder = new WizardScene(
       }
       const [hour, minute] = ctx.message.text.split(":");
       ctx.wizard.state.task = { ...ctx.wizard.state.task, hour, minute };
-      // TODO: delete reminder after executing
       const task = new Scheduler({
         ...ctx.wizard.state.task,
-        scheduleCallback: () => ctx.reply(ctx.wizard.state.task.title)
+        scheduleCallback: () => {
+          ctx.reply(ctx.wizard.state.task.title);
+          if (ctx.wizard.state.task.limit === 'once') {
+            ctx.session.reminders = ctx.session.reminders.filter(reminder => reminder.id !== task.id);
+          }
+        }
       });
       task.start();
       ctx.session.reminders.push(task);
