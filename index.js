@@ -6,7 +6,9 @@ const stage = require('./stages');
 
 
 const BOT_TOKEN = process.env.BOT_TOKEN;
-const URL = process.env.URL || 'https://redmine-assistant.herokuapp.com/';
+console.log("TCL: BOT_TOKEN", BOT_TOKEN)
+const URL = process.env.URL || 'https://protected-taiga-25874.herokuapp.com';
+console.log("TCL: URL", URL)
 const PORT = process.env.PORT || 2000;
 
 const app = new Telegraf(BOT_TOKEN);
