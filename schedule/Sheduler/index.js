@@ -13,14 +13,6 @@ class Scheduler {
     this.job = null;
   }
 
-  get() {
-    return {
-      id: this.id,
-      title: this.title,
-      time: `${this.hour}:${this.minute}`
-    };
-  }
-
   everyDayReminde() {
     this.job = schedule.scheduleJob(
       { hour: this.hour, minute: this.minute },
