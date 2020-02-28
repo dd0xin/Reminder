@@ -17,7 +17,7 @@ const expressApp = express();
 
 // app.telegram.setWebhook(`https://api.telegram.org/bot${BOT_TOKEN}/setWebhook?url=${URL}`)
 
-app.telegram.setWebhook(`${URL}/bot${API_TOKEN}`);
+app.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
 
 app.use(session());
 
@@ -46,7 +46,7 @@ app.use(stage.middleware());
 
 // app.startWebhook(`/bot${BOT_TOKEN}`, null, PORT)
 
-expressApp.use(app.webhookCallback(`/bot${API_TOKEN}`));
+expressApp.use(app.webhookCallback(`/bot${BOT_TOKEN}`));
 
 expressApp.get('/', (req, res) => {
   res.send('Hello World!');
