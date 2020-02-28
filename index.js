@@ -13,7 +13,9 @@ const PORT = process.env.PORT || 2000;
 
 const app = new Telegraf(BOT_TOKEN);
 
-app.telegram.setWebhook(`${URL}bot${BOT_TOKEN}`)
+console.log(`${URL}bot${BOT_TOKEN}`);
+
+app.telegram.setWebhook(`https://api.telegram.org/bot${BOT_TOKEN}/setWebhook?url=${URL}`)
 
 app.use(session());
 
