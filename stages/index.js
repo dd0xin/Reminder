@@ -1,8 +1,9 @@
-const { Markup, Stage } = require('telegraf');
+const { Stage } = require('telegraf');
 
 const createReminder = require('./reminder');
 const remindersReview = require('./reminders-review');
 
+const getReminderActionsKeyboard = require('./keyboards/getReminderActionsKeyboard');
 
 const stage = new Stage([createReminder, remindersReview]);
 
@@ -17,10 +18,7 @@ stage.action('SEE_SAVED_REMINDERS', (ctx) => {
 stage.action('LEAVE_SCENE', (ctx) => {
 	ctx.reply(
 		`What will be next, ${ctx.from.first_name}?`,
-    Markup.inlineKeyboard([
-			Markup.callbackButton("Add Reminder", "ADD_REMINDER"),
-      Markup.callbackButton("See Saved Reminders", "SEE_SAVED_REMINDERS")
-    ]).extra()
+    getReminderActionsKeyboard(),
 		);
 	return ctx.scene.leave();
 })

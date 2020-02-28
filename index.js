@@ -1,9 +1,10 @@
+const dotenv = require('dotenv');
+
 const { Markup, session } = require('telegraf');
-
 const Telegraf = require('telegraf')
-
 const stage = require('./stages');
 
+dotenv.config();
 
 const BOT_TOKEN = process.env.BOT_TOKEN;
 const URL = process.env.URL || 'https://reminder-app-bot.herokuapp.com';
@@ -12,7 +13,7 @@ const PORT = process.env.PORT || 2000;
 const app = new Telegraf(BOT_TOKEN);
 
 
-app.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
+// app.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
 
 app.use(session());
 
@@ -39,6 +40,6 @@ app.start(ctx => {
 
 app.use(stage.middleware());
 
-app.startWebhook(`/bot${BOT_TOKEN}`, null, PORT);
+// app.startWebhook(`/bot${BOT_TOKEN}`, null, PORT);
 
-// app.launch(); // Start polling bot from you computer
+app.launch(); // Start polling bot from you computer

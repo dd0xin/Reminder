@@ -1,5 +1,7 @@
 const { Markup, Composer } = require('telegraf');
 
+const getReminderActionsKeyboard = require('../../keyboards/getReminderActionsKeyboard');
+
 const stepHandler = new Composer();
 
 stepHandler.action(/cancel(\s.+)?/, ctx => {
@@ -14,10 +16,7 @@ stepHandler.action(/cancel(\s.+)?/, ctx => {
   ctx.session.reminders = [ ...updatedReminders ];
   ctx.reply(
     "Reminder was successfully canceled!",
-    Markup.inlineKeyboard([
-      Markup.callbackButton("Add Reminder", "ADD_REMINDER"),
-      Markup.callbackButton("See Saved Reminders", "SEE_SAVED_REMINDERS")
-    ]).extra()
+    getReminderActionsKeyboard(),
   );
   return ctx.wizard.next();
 });
