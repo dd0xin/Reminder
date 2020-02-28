@@ -41,12 +41,14 @@ const createReminder = new WizardScene(
         ...ctx.wizard.state.task,
         scheduleCallback: () => {
           ctx.reply(ctx.wizard.state.task.title);
+          console.log("TCL: ctx.wizard.state.task.title", ctx.wizard.state.task.title)
           if (ctx.wizard.state.task.limit === 'once') {
             ctx.session.reminders = ctx.session.reminders.filter(reminder => reminder.id !== task.id);
           }
         }
       });
       task.start();
+      console.log("TCL: task", task)
       ctx.session.reminders.push(task);
       ctx.reply(
         "Reminder have just started! Would you like to add another one?",
