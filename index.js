@@ -5,17 +5,19 @@ const Telegraf = require('telegraf')
 const stage = require('./stages');
 
 
+const express = require('express');
+
 const BOT_TOKEN = process.env.BOT_TOKEN;
-console.log("TCL: BOT_TOKEN", BOT_TOKEN)
 const URL = process.env.URL || 'https://protected-taiga-25874.herokuapp.com';
-console.log("TCL: URL", URL)
 const PORT = process.env.PORT || 2000;
 
 const app = new Telegraf(BOT_TOKEN);
+const expressApp = express();
 
-console.log(`${URL}bot${BOT_TOKEN}`);
 
-app.telegram.setWebhook(`https://api.telegram.org/bot${BOT_TOKEN}/setWebhook?url=${URL}`)
+// app.telegram.setWebhook(`https://api.telegram.org/bot${BOT_TOKEN}/setWebhook?url=${URL}`)
+
+app.telegram.setWebhook(`${URL}/bot${API_TOKEN}`);
 
 app.use(session());
 
@@ -42,5 +44,14 @@ app.start(ctx => {
 
 app.use(stage.middleware());
 
-app.startWebhook(`/bot${BOT_TOKEN}`, null, PORT)
+// app.startWebhook(`/bot${BOT_TOKEN}`, null, PORT)
+
+expressApp.use(app.webhookCallback(`/bot${API_TOKEN}`));
+
+expressApp.get('/', (req, res) => {
+  res.send('Hello World!');
+});
+expressApp.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 // app.launch(); // Start polling bot from you computer
