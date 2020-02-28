@@ -44,14 +44,14 @@ app.start(ctx => {
 
 app.use(stage.middleware());
 
-// app.startWebhook(`/bot${BOT_TOKEN}`, null, PORT)
+app.startWebhook(`/bot${BOT_TOKEN}`, null, PORT);
 
-expressApp.use(app.webhookCallback(`/bot${BOT_TOKEN}`));
+// expressApp.use(app.webhookCallback(`/bot${BOT_TOKEN}`));
 
-expressApp.get('/', (req, res) => {
-  res.send('Hello World!');
-});
-expressApp.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// expressApp.get('/', (req, res) => {
+//   res.send('Hello World!');
+// });
+// expressApp.listen(PORT, () => {
+//   console.log(`Server running on port ${PORT}`);
+// });
 // app.launch(); // Start polling bot from you computer
