@@ -2,6 +2,8 @@ const { Markup } = require("telegraf");
 const Extra = require('telegraf/extra');
 const WizardScene = require("telegraf/scenes/wizard");
 
+const getReminderActionsKeyboard = require('../keyboards/getReminderActionsKeyboard');
+
 const stepHandler = require('./actions');
 
 
@@ -12,10 +14,7 @@ const remindersReview = new WizardScene(
     if (!session.reminders || !session.reminders.length) {
       ctx.reply(
         "You don't have any reminders",
-        Markup.inlineKeyboard([
-          Markup.callbackButton("Add Reminder", "ADD_REMINDER"),
-          Markup.callbackButton("See Saved Reminders", "SEE_SAVED_REMINDERS")
-        ]).extra()
+        getReminderActionsKeyboard(),
       );
       return ctx.scene.leave();
     }

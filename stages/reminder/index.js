@@ -10,7 +10,8 @@ const { isValidTime } = require('../../utils');
 const createReminder = new WizardScene(
   "create-reminder",
   ctx => {
-    ctx.session.reminders = ctx.session.reminders ? [...ctx.session.reminders ] : [];
+    const { session: { reminders } } = ctx;
+    ctx.session.reminders = reminders ? [...reminders ] : [];
     ctx.reply("Enter reminder subject.");
     ctx.wizard.state.task = {};
     return ctx.wizard.next();
@@ -35,19 +36,22 @@ const createReminder = new WizardScene(
       if (!ctx.message || !isValidTime(ctx.message.text)) {
         return ctx.reply("Please enter valid time!");
       }
-      const [hour, minute] = ctx.message.text.split(":");
-      ctx.wizard.state.task = { ...ctx.wizard.state.task, hour, minute };
-      const task = new Scheduler({
-        ...ctx.wizard.state.task,
+      const { task } = ctx.wizard.state;
+      const [ hour, minute ] = ctx.message.text.split(":");
+      ctx.wizard.state.task = { ...task, hour, minute };
+      const reminder = new Scheduler({
+        ...task,
+        hour,
+        minute,
         scheduleCallback: () => {
-          ctx.reply(ctx.wizard.state.task.title);
-          if (ctx.wizard.state.task.limit === 'once') {
-            ctx.session.reminders = ctx.session.reminders.filter(reminder => reminder.id !== task.id);
+          ctx.reply(reminder.title);
+          if (reminder.limit === 'once') {
+            ctx.session.reminders = ctx.session.reminders.filter(savedReminders => savedReminders.id !== reminder.id);
           }
         }
       });
-      task.start();
-      ctx.session.reminders.push(task);
+      reminder.start();
+      ctx.session.reminders.push(reminder);
       ctx.reply(
         "Reminder have just started! Would you like to add another one?",
         Markup.inlineKeyboard([
