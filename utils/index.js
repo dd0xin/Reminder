@@ -23,7 +23,7 @@ const wakeUpHeroku = (minutes) => {
 		async () => {
 			try {
 				await fetch('https://reminder-app-bot.herokuapp.com/');
-				console.log(`${ctx.from.first_name}, wake up request have just sent to heroku`)
+				console.log('Wake up request have just sent to heroku')
 
 			} catch (error) {
 				console.log(error);
