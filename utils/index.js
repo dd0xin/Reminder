@@ -9,7 +9,7 @@ const generateID = () =>
 
 const wakeUpHeroku = (minutes, callback) => {
 	schedule.scheduleJob(
-		{ minute: minutes },
+		`*/${minutes} * * * *`,
 		() => callback()
 	);
 }
@@ -17,5 +17,5 @@ const wakeUpHeroku = (minutes, callback) => {
 module.exports = {
 	isValidTime,
 	generateID,
-	wakeUpHeroku
+	wakeUpHeroku,
 }

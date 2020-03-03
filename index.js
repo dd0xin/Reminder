@@ -1,11 +1,13 @@
 const dotenv = require('dotenv');
-const fetch = require('node-fetch');
 
 const { Markup, session } = require('telegraf');
 const Telegraf = require('telegraf')
 const stage = require('./stages');
 
 const { wakeUpHeroku } = require('./utils');
+
+
+const fetch = require('node-fetch');
 
 dotenv.config();
 
@@ -22,7 +24,7 @@ app.use(session());
 
 app.catch((err, ctx) => {
 	ctx.reply(
-		`Ooops, something went wrong. Please, try again.`,
+		`Ooops, something went wrong. Please, try again. ${err}`,
 		Markup.inlineKeyboard([
 			Markup.callbackButton("Add Reminder", "ADD_REMINDER"),
       Markup.callbackButton("See Saved Reminders", "SEE_SAVED_REMINDERS")
@@ -32,12 +34,11 @@ app.catch((err, ctx) => {
 
 // Start Bot
 app.start(ctx => {
-	wakeUpHeroku(28, async () => {
+	wakeUpHeroku(1, async () => {
 		try {
 			await fetch('https://reminder-app-bot.herokuapp.com/');
-			ctx.reply(
-				`${ctx.from.first_name}, request have just sent to heroku`,
-			);
+			console.log(`${ctx.from.first_name}, request have just sent to heroku`)
+
 		} catch (error) {
 			console.log(error);
 		}
