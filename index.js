@@ -43,6 +43,6 @@ app.use(stage.middleware());
 
 app.startWebhook(`/bot${BOT_TOKEN}`, null, PORT);
 
-wakeUpHeroku(28);
+wakeUpHeroku(10);
 
 // app.launch(); // Start polling bot from you computer
