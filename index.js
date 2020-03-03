@@ -1,8 +1,11 @@
 const dotenv = require('dotenv');
+const fetch = require('node-fetch');
 
 const { Markup, session } = require('telegraf');
 const Telegraf = require('telegraf')
 const stage = require('./stages');
+
+const { wakeUpHeroku } = require('./utils');
 
 dotenv.config();
 
@@ -29,6 +32,16 @@ app.catch((err, ctx) => {
 
 // Start Bot
 app.start(ctx => {
+	wakeUpHeroku(28, async () => {
+		try {
+			await fetch('https://reminder-app-bot.herokuapp.com/');
+			ctx.reply(
+				`${ctx.from.first_name}, request have just sent to heroku`,
+			);
+		} catch (error) {
+			console.log(error);
+		}
+	})
 	ctx.reply(
 		`How can I help you, ${ctx.from.first_name}?`,
     Markup.inlineKeyboard([
