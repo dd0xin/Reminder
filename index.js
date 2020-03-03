@@ -6,7 +6,6 @@ const stage = require('./stages');
 
 const { wakeUpHeroku } = require('./utils');
 
-
 const fetch = require('node-fetch');
 
 dotenv.config();
@@ -16,7 +15,6 @@ const URL = process.env.URL || 'https://reminder-app-bot.herokuapp.com';
 const PORT = process.env.PORT || 2000;
 
 const app = new Telegraf(BOT_TOKEN);
-
 
 app.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
 
@@ -34,7 +32,7 @@ app.catch((err, ctx) => {
 
 // Start Bot
 app.start(ctx => {
-	wakeUpHeroku(1, async () => {
+	wakeUpHeroku(28, async () => {
 		try {
 			await fetch('https://reminder-app-bot.herokuapp.com/');
 			console.log(`${ctx.from.first_name}, request have just sent to heroku`)
