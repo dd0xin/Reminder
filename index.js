@@ -6,8 +6,6 @@ const stage = require('./stages');
 
 const { wakeUpHeroku } = require('./utils');
 
-const fetch = require('node-fetch');
-
 dotenv.config();
 
 const BOT_TOKEN = process.env.BOT_TOKEN;

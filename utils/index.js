@@ -1,5 +1,5 @@
 const schedule = require("node-schedule");
-
+const fetch = require('node-fetch');
 /**
  *
  * @param {string} time Time for validation
