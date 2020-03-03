@@ -32,15 +32,7 @@ app.catch((err, ctx) => {
 
 // Start Bot
 app.start(ctx => {
-	wakeUpHeroku(28, async () => {
-		try {
-			await fetch('https://reminder-app-bot.herokuapp.com/');
-			console.log(`${ctx.from.first_name}, request have just sent to heroku`)
-
-		} catch (error) {
-			console.log(error);
-		}
-	})
+	wakeUpHeroku(28);
 	ctx.reply(
 		`How can I help you, ${ctx.from.first_name}?`,
     Markup.inlineKeyboard([
