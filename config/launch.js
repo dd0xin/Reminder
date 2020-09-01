@@ -11,7 +11,6 @@ const launchApp = (app) => {
 
 	app.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
 	app.startWebhook(`/bot${BOT_TOKEN}`, null, PORT);
-  console.log("launchApp -> ${URL}/bot${BOT_TOKEN}`", `${URL}/bot${BOT_TOKEN}`)
 
 }
 
