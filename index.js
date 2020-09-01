@@ -5,6 +5,7 @@ const Telegraf = require('telegraf')
 const stage = require('./stages');
 
 const { wakeUpHeroku } = require('./utils');
+const { catch } = require('telegraf/composer');
 
 dotenv.config();
 
@@ -30,13 +31,17 @@ app.catch((err, ctx) => {
 
 // Start Bot
 app.start(ctx => {
-	ctx.reply(
-		`How can I help you, ${ctx.from.first_name}?`,
-    Markup.inlineKeyboard([
-			Markup.callbackButton("Add Reminder", "ADD_REMINDER"),
-      Markup.callbackButton("See Saved Reminders", "SEE_SAVED_REMINDERS")
-    ]).extra()
-	);
+	try {
+		ctx.reply(
+			`How can I help you, ${ctx.from.first_name}?`,
+			Markup.inlineKeyboard([
+				Markup.callbackButton("Add Reminder", "ADD_REMINDER"),
+				Markup.callbackButton("See Saved Reminders", "SEE_SAVED_REMINDERS")
+			]).extra()
+		);
+	} catch (error) {
+    console.log("error when started: ", error)
+	}
 });
 
 app.use(stage.middleware());
