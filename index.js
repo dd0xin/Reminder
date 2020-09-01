@@ -9,7 +9,7 @@ const { wakeUpHeroku } = require('./utils');
 dotenv.config();
 
 const BOT_TOKEN = process.env.BOT_TOKEN;
-const URL = process.env.URL || 'https://reminder-one.now.sh/';
+const URL = process.env.URL || 'https://reminder-bot-telegraf.herokuapp.com/';
 const PORT = process.env.PORT || 2000;
 
 const app = new Telegraf(BOT_TOKEN);
@@ -40,6 +40,8 @@ app.start(ctx => {
 });
 
 app.use(stage.middleware());
+
+wakeUpHeroku(10);
 
 app.startWebhook(`/bot${BOT_TOKEN}`, null, PORT);
 
