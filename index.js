@@ -15,7 +15,7 @@ app.catch((err, ctx) => {
 		`Ooops, something went wrong. Please, try again. ${err}`,
 		Markup.inlineKeyboard([
 			Markup.callbackButton("Add Reminder", "ADD_REMINDER"),
-      Markup.callbackButton("See Saved Reminders, pidor", "SEE_SAVED_REMINDERS")
+      Markup.callbackButton("See Saved Reminders", "SEE_SAVED_REMINDERS")
     ]).extra()
 	)
 })
