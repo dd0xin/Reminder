@@ -48,6 +48,7 @@ wakeUpHeroku(10);
 app.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
 app.startWebhook(`/bot${BOT_TOKEN}`, null, PORT);
 console.log("URL", URL)
+console.log("PORT", PORT)
 console.log("BOT_TOKEN", BOT_TOKEN)
 
 console.log('everything is ok')
