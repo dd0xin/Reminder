@@ -10,11 +10,9 @@ dotenv.config();
 
 const BOT_TOKEN = process.env.BOT_TOKEN;
 const URL = process.env.URL || 'https://reminder-bot-telegraf.herokuapp.com/';
-const PORT = process.env.PORT || 2000;
+const PORT = process.env.PORT || 5000;
 
 const app = new Telegraf(BOT_TOKEN);
-
-app.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
 
 app.use(session());
 
@@ -47,6 +45,11 @@ app.use(stage.middleware());
 
 wakeUpHeroku(10);
 
+app.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
 app.startWebhook(`/bot${BOT_TOKEN}`, null, PORT);
+console.log("URL", URL)
+console.log("BOT_TOKEN", BOT_TOKEN)
+
+console.log('everything is ok')
 
 // app.launch(); // Start polling bot from you computer
