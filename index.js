@@ -5,7 +5,6 @@ const Telegraf = require('telegraf')
 const stage = require('./stages');
 
 const { wakeUpHeroku } = require('./utils');
-const { catch } = require('telegraf/composer');
 
 dotenv.config();
 
